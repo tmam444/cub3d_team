@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chulee <chulee@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 19:50:48 by chulee            #+#    #+#             */
-/*   Updated: 2022/10/12 20:06:57 by chulee           ###   ########.fr       */
+/*   Updated: 2022/10/12 20:19:52 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,18 +289,24 @@ void	make_bg(t_mlx *mlx)
 	}
 }
 
+void	ft_parsing(t_mlx *info, char *file)
+{
+	/*
+	mlx.player.x = atof(av[1]);
+    mlx.player.y = atof(av[2]);
+    mlx.player.th = deg2rad(atof(av[3]));
+	*/
+
+}
+
 int main(int ac, char** av)
 {
 	t_mlx		mlx;
 
-	ft_assert(ac == 4, "usage: ./cub3D x y th(deg)\n");
-	
-
+	ft_assert(ac == 2, "please input only map file");
+	ft_parsing(&mlx, av[1]);
 	mlx.mlx_ptr = mlx_init();
 	mlx.win = mlx_new_window(mlx.mlx_ptr, SX, SY, "A simple example");
-    mlx.player.x = atof(av[1]);
-    mlx.player.y = atof(av[2]);
-    mlx.player.th = deg2rad(atof(av[3]));
 	ft_load_image(&mlx);
 	make_bg(&mlx);
 	mlx_hook(mlx.win, X_EVENT_KEY_PRESS, 0, \
