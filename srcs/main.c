@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chulee <chulee@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 19:50:48 by chulee            #+#    #+#             */
-/*   Updated: 2022/10/12 20:06:57 by chulee           ###   ########.fr       */
+/*   Updated: 2022/10/12 22:22:54 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,12 @@ bool get_wall_intersection( double ray, double px, double py, dir_t* wdir, doubl
 
         if( cell == 1 ) {   /* hit wall? */
             if( hit_side == VERT ) {
-                *wdir = (xstep > 0) ? DIR_W : DIR_E;
+                *wdir = (xstep > 0) ? DIR_E : DIR_W;
                 *wx = nx;
                 *wy = f;
             }
             else { /* HORIZ */
-                *wdir = (ystep > 0) ? DIR_S : DIR_N;
+                *wdir = (ystep > 0) ? DIR_N : DIR_S;
                 *wx = g;
                 *wy = ny;
             }
@@ -156,8 +156,11 @@ void draw_wall(t_mlx* gr, double wdist, int x, dir_t wdir)
 	for (int y = ystart; y < yend; y++)
 	{
 		int ty = (int)((double)(y-y0) * 64 / wh); /* texture row # */
-		int color = gr->imgs[wdir].data[ty * 64 + tx];
-		//color = 0x00ccaaaa;
+		int color;
+		if (wdir == DIR_W || wdir == DIR_N)
+			color = gr->imgs[wdir].data[ty * 64 + tx];
+		else
+			color = gr->imgs[wdir].data[ty * 64 - tx];
 		mlx_pixel_put(gr->mlx_ptr, gr->win, x, y, color);
 	}
 }

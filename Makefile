@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: chulee <chulee@student.42seoul.kr>         +#+  +:+       +#+         #
+#    By: youskim <youskim@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/26 19:41:21 by chulee            #+#    #+#              #
-#    Updated: 2022/10/12 20:05:53 by chulee           ###   ########.fr        #
+#    Updated: 2022/10/12 22:20:43 by youskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ OBJS = $(addprefix objs/, $(notdir $(SRCS:.c=.o)))
 SRCS_B=bonus/main_bonus.c
 OBJS_B = $(addprefix objs/, $(notdir $(SRCS_B:.c=.o)))
 CC = cc
-CFLAGS = -fsanitize=address -g
+CFLAGS = 
 MLX_LIB = ./minilibx_opengl_20191021
 MLX_FLAGS = -lm -L$(MLX_LIB) -lmlx -framework OpenGL -framework AppKit
 
