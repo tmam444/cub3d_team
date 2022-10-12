@@ -1,2 +1,1 @@
-# cub3D Team
-cub3d
+# cub3D
