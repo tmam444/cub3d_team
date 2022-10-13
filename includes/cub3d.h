@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chulee <chulee@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 17:44:58 by chulee            #+#    #+#             */
-/*   Updated: 2022/10/12 20:06:28 by chulee           ###   ########.fr       */
+/*   Updated: 2022/10/13 20:45:56 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <float.h>
 # include <math.h>
 # include <string.h>
-# include <stdbool.h>
+# include <fcntl.h>
 # include "get_next_line.h"
 # include "../minilibx_opengl_20191021/mlx.h"
 
@@ -40,6 +40,9 @@
 #define	 KEY_D 2
 #define	 X_EVENT_KEY_PRESS 2
 #define  IMG_SIZE 4
+#define  TYPE_LENGTH 6
+#define  true        1
+#define  false       0
 
 #define  SX         400     /* screen width */
 #define  SY         250     /* screen height */
@@ -81,26 +84,56 @@ typedef struct s_img
 typedef struct s_info
 {
 	int			**map;
+	int			map_w;
+	int			map_h;
 	char		*path[IMG_SIZE];
 	int			floor_color;
 	int			ceilling_color;
 }			t_info;
 
+typedef struct	s_DDA
+{
+	int	xstep;
+	int	ystep;
+
+	double	fx;
+	double	gy;
+
+	double	nx;
+	double	ny;
+
+	double	dist_vert;
+	double	dist_horiz;
+
+	int		hit_dir;
+	int 	hit;
+
+	int	map_x;
+	int	map_y;
+}		t_DDA;
+
 typedef struct	s_mlx
 {
 	void		*mlx_ptr;
 	void		*win;
-	void		*bg;
-	void		*bg_addr;
-	int			bg_bbp;
-	int			bg_line_l;
-	int			bg_endian;
 	t_player	player;
 	t_info		info;
 	t_img		background;
 	t_img		imgs[IMG_SIZE];
+	t_DDA		DDA;
 }				t_mlx;
 
+void	ft_parsing(t_mlx *info, char *file);
 
-
+//utils
+char	**ft_split(char const *s, char c);
+void	ft_split_clear(char **split);
+int		ft_assert(int check, const char *err_msg);
+char	*ft_strdup(const char *str);
+int		ft_atoi(const char *str);
+int		ft_strcmp(char *s1, char *s2);
+size_t	ft_strlen(const char *str);
+void	*ft_memset(void *b, int c, size_t n);
+char	*ft_strjoin(char const *s1, char const *s2);
+int		ft_isdigit(int c);
 #endif

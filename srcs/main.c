@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 19:50:48 by chulee            #+#    #+#             */
-/*   Updated: 2022/10/12 20:19:52 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/13 19:50:13 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ static int map[MAPX][MAPY] = {  /* warning: index order is [x][y] */
     {1,1,0,0,1},
     {1,1,1,1,1}
 };
-
-
 
 int sgn( double d )
 {
@@ -59,7 +57,7 @@ int map_get_cell( int x, int y )
     return (x >= 0 && x < MAPX && y >= 0 && y < MAPY) ? map[x][y] : -1;
 }
 
-bool get_wall_intersection( double ray, double px, double py, dir_t* wdir, double* wx, double* wy )
+int get_wall_intersection( double ray, double px, double py, dir_t* wdir, double* wx, double* wy )
 {
     int xstep = sgn( cos(ray) );  /* +1 (right), 0 (no change), -1 (left) */
     int ystep = sgn( sin(ray) );  /* +1 (up),    0 (no change), -1 (down) */
@@ -71,7 +69,7 @@ bool get_wall_intersection( double ray, double px, double py, dir_t* wdir, doubl
     double ny = (ystep > 0) ? floor(py)+1 : ((ystep < 0) ? ceil(py)-1 : py);
 
     double f=INFINITY, g=INFINITY;
-    bool hit = false;
+    int hit = false;
     int hit_side; /* either VERT or HORIZ */
 
     while( !hit )
@@ -224,19 +222,22 @@ int	ft_key_event(int keycode, t_player *player)
 	return (0);
 }
 
-void	ft_assert(int check, const char *err_msg)
+int	ft_assert(int check, const char *err_msg)
 {
 	if (!check)
 	{
+		write(2, "Error\n", 6);
 		write(2, err_msg, strlen(err_msg));
+		write(2, "\n", 1);
 		exit(1);
 	}
+	return (1);
 }
 
 int	ft_render(t_mlx *mlx)
 {
 	mlx_clear_window(mlx->mlx_ptr, mlx->win);
-	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win, mlx->bg, 0, 0);
+	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win, mlx->background.img, 0, 0);
     for( int x=0; x<SX; x++ ) {
 		dir_t	wdir;
         double	wdist = cast_single_ray(x, &mlx->player, &wdir);
@@ -267,16 +268,17 @@ void	ft_load_image(t_mlx *mlx)
 
 void    bg_pixel_put(t_mlx *mlx, int x, int y, int color)
 {
-    char *dst;
+    unsigned int *dst;
 
-    dst = mlx->bg_addr + (y * mlx->bg_line_l + x * (mlx->bg_bbp / 8));
-	*(unsigned int*)dst = color;
+    dst = mlx->background.data + (y * 64+ x);
+	*dst = color;
 }
 
 void	make_bg(t_mlx *mlx)
 {
-	mlx->bg = mlx_new_image(mlx->mlx_ptr, SX, SY);
-	mlx->bg_addr = mlx_get_data_addr(mlx->bg, &mlx->bg_bbp, &mlx->bg_line_l, &mlx->bg_endian);
+	mlx->background.img = mlx_new_image(mlx->mlx_ptr, SX, SY);
+	mlx->background.data = (unsigned int *)mlx_get_data_addr(mlx->background.img, &mlx->background.bpp, \
+					&mlx->background.line_size, &mlx->background.endian);
 	for (int x = 0; x < SX; x++)
 	{
 		for (int y = 0; y < SY; y++)
@@ -289,14 +291,24 @@ void	make_bg(t_mlx *mlx)
 	}
 }
 
-void	ft_parsing(t_mlx *info, char *file)
+void	ft_init(t_mlx *mlx)
 {
-	/*
-	mlx.player.x = atof(av[1]);
-    mlx.player.y = atof(av[2]);
-    mlx.player.th = deg2rad(atof(av[3]));
-	*/
+	ft_memset(mlx, 0, sizeof(t_mlx));
+	mlx->info.floor_color = -1;
+	mlx->info.ceilling_color = -1;
+}
 
+void	ft_file_type_check(char *filename)
+{
+	static const char	*file_type = ".cub";
+	int					i;
+	int					len;
+
+	len = ft_strlen(filename);
+	i = ft_strlen(file_type);
+	ft_assert(len > i, "File Type Error");
+	while (i > 0)
+		ft_assert(filename[--len] == file_type[--i], "File Type Error");
 }
 
 int main(int ac, char** av)
@@ -304,7 +316,10 @@ int main(int ac, char** av)
 	t_mlx		mlx;
 
 	ft_assert(ac == 2, "please input only map file");
+	ft_file_type_check(av[1]);
+	ft_init(&mlx);
 	ft_parsing(&mlx, av[1]);
+	exit(0);
 	mlx.mlx_ptr = mlx_init();
 	mlx.win = mlx_new_window(mlx.mlx_ptr, SX, SY, "A simple example");
 	ft_load_image(&mlx);

@@ -3,21 +3,32 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: chulee <chulee@student.42seoul.kr>         +#+  +:+       +#+         #
+#    By: youskim <youskim@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/26 19:41:21 by chulee            #+#    #+#              #
-#    Updated: 2022/10/12 20:05:53 by chulee           ###   ########.fr        #
+#    Updated: 2022/10/13 20:50:52 by youskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=cub3D
 B_NAME=cub3D_bonus
-SRCS=srcs/main.c
+SRCS=srcs/main.c \
+	 srcs/ft_atoi.c \
+	 srcs/ft_parsing.c \
+	 srcs/ft_split.c \
+	 srcs/ft_strdup.c \
+	 srcs/ft_strcmp.c \
+	 srcs/ft_strlen.c \
+	 srcs/get_next_line.c \
+	 srcs/get_next_line_utils.c \
+	 srcs/ft_memset.c \
+	 srcs/ft_strjoin.c \
+	 srcs/ft_isdigit.c
 OBJS = $(addprefix objs/, $(notdir $(SRCS:.c=.o)))
 SRCS_B=bonus/main_bonus.c
 OBJS_B = $(addprefix objs/, $(notdir $(SRCS_B:.c=.o)))
 CC = cc
-CFLAGS = -fsanitize=address -g
+CFLAGS =
 MLX_LIB = ./minilibx_opengl_20191021
 MLX_FLAGS = -lm -L$(MLX_LIB) -lmlx -framework OpenGL -framework AppKit
 
