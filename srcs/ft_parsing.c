@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 15:48:00 by youskim           #+#    #+#             */
-/*   Updated: 2022/10/13 20:50:38 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/17 14:13:36 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_check_valid_rgb(char *rgb_fc)
 	ft_assert(comma_count == 2, "RGB parsing Error!");
 }
 
-static int ft_parse_rgb(char *rgb_fc)
+static int	ft_parse_rgb(char *rgb_fc)
 {
 	char	**split;
 	int		rgb;
@@ -96,7 +96,35 @@ static void	ft_check_type(t_mlx *mlx, char *line)
 	ft_split_clear(split);
 }
 
-static void ft_check_map_data(t_mlx *mlx, char *map_data)
+void	ft_map_size_check(t_mlx *mlx, char **split)
+{
+	
+}
+
+void	ft_check_map_surround_wall(mt_mlx *mlx, char **split)
+{
+
+}
+
+void	ft_check_validate(mt_mlx *mlx, char **split)
+{
+
+}
+
+void	ft_save_map(mt_mlx *mlx, char **split)
+{
+
+}
+
+void	ft_init_map(t_mlx *mlx, char **split)
+{
+	ft_map_size_check(mlx, split);
+	ft_check_map_surround_wall(mlx, split);
+	ft_check_validate(mlx, split);
+	ft_save_map(mlx, split);
+}
+
+static void	ft_check_map_data(t_mlx *mlx, char *map_data)
 {
 	char				**split;
 	int					i;
@@ -111,7 +139,8 @@ static void ft_check_map_data(t_mlx *mlx, char *map_data)
 			ft_check_type(mlx, split[i]);
 		else
 		{
-			
+			ft_init_map(mlx, split);
+			break ;
 		}
 	}
 	ft_split_clear(split);
@@ -128,7 +157,7 @@ void	ft_check_line_feed(char *map_data)
 	i = -1;
 	while (map_data[++i] != '\0')
 	{
-		write(2, map_data + i , 1);
+		write(2, map_data + i, 1);
 		if (map_data[i] == '\n')
 		{
 			if (char_count > 0)
@@ -151,7 +180,7 @@ void	ft_parsing(t_mlx *mlx, char *file)
 	char	*temp;
 
 	map_fd = open(file, O_RDONLY);
-	ft_assert(map_fd != -1 , "File Open Error");
+	ft_assert(map_fd != -1, "File Open Error");
 	map_data = NULL;
 	line = get_next_line(map_fd);
 	while (line != NULL)
