@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 17:44:58 by chulee            #+#    #+#             */
-/*   Updated: 2022/10/17 17:31:07 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/17 20:09:01 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@
 #define  true        1
 #define  false       0
 
-#define  SX         720     /* screen width */
-#define  SY         400     /* screen height */
+#define  SX         1280     /* screen width */
+#define  SY         1024     /* screen height */
 #define  FOV        60      /* field of view (in degree) */
 #define  FOV_H      deg2rad(FOV)
 #define  FOV_V      (FOV_H*(double)SY/(double)SX)
 #define  WALL_H     1.0
-#define  ROT_UNIT   0.03
-#define  MOVE_UNIT  0.1
+#define  ROT_UNIT   0.3
+#define  MOVE_UNIT  0.3
 #define  _2PI       2 * M_PI /* 2 * M_PI */
 
 enum { VERT, HORIZ };
@@ -139,5 +139,6 @@ void	*ft_memset(void *b, int c, size_t n);
 char	*ft_strjoin(char const *s1, char const *s2);
 int		ft_isdigit(int c);
 char	*ft_strchr(const char *s, int c);
+void	ft_clear(t_mlx *mlx);
 
 #endif

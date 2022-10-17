@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 19:50:48 by chulee            #+#    #+#             */
-/*   Updated: 2022/10/17 18:01:16 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/17 19:20:07 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,6 @@ void	ft_clear(t_mlx *mlx)
 		}
 		free(mlx->info.map);
 	}
-	exit(0);
 }
 
 int	ft_key_event(int keycode, t_mlx *mlx)
@@ -219,7 +218,10 @@ int	ft_key_event(int keycode, t_mlx *mlx)
 	int	i;
 
 	if (keycode == KEY_ESC)
+	{
 		ft_clear(mlx);
+		exit(0);
+	}
 	else
 		ft_player_move(keycode, mlx);
 	return (0);

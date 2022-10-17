@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 15:48:00 by youskim           #+#    #+#             */
-/*   Updated: 2022/10/17 17:37:04 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/17 20:08:29 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,9 +235,35 @@ void	ft_check_empty_line(char **split)
 	}
 }
 
-void	ft_rotate_map(t_mlx *mlx, char **split)
+void	ft_rotate_map(t_mlx *mlx)
 {
+	int	**temp;
+	int	i;
+	int	j;
 
+	temp = malloc(sizeof(int *) * mlx->info.map_w);
+	ft_assert(temp != NULL, "Malloc Error!");
+	i = 0;
+	while (i < mlx->info.map_w)
+	{
+		temp[i] = malloc(sizeof(int) * mlx->info.map_h);
+		ft_assert(temp[i] != NULL, "Malloc Error!");
+		j = 0;
+		while (j < mlx->info.map_h)
+		{
+			temp[i][j] = mlx->info.map[mlx->info.map_h - 1 - j][i];
+			j++;
+		}
+		i++;
+	}
+	ft_clear(mlx);
+	mlx->info.map = temp;
+	i = mlx->info.map_w;
+	mlx->info.map_w = mlx->info.map_h;
+	mlx->info.map_h = i;
+	i = mlx->player.x;
+	mlx->player.x = mlx->player.y + 0.5;
+	mlx->player.y = (int)fabs((double)i - (mlx->info.map_w - 1)) + 0.5;
 }
 
 void	ft_init_map(t_mlx *mlx, char **split)
@@ -247,7 +273,22 @@ void	ft_init_map(t_mlx *mlx, char **split)
 	ft_save_map(mlx, split);
 	ft_check_map_surround_wall(mlx);
 	ft_check_validate(mlx);
-	// ft_rotate_map(mlx, split);
+	ft_rotate_map(mlx);
+	// for (int i = 0; i < mlx->info.map_h; i++)
+	// {
+	// 	for (int j = 0; j < mlx->info.map_w; j++)
+	// 	{
+	// 		if (i == (int)mlx->player.x && j == (int)mlx->player.y)
+	// 			printf("P");
+	// 		else if (mlx->info.map[i][j] == -1)
+	// 			printf("x");
+	// 		else if (mlx->info.map[i][j] == 0)
+	// 			printf("0");
+	// 		else if (mlx->info.map[i][j] == 1)
+	// 			printf("1");
+	// 	}
+	// 	printf("\n");
+	// }
 }
 
 static void	ft_check_map_data(t_mlx *mlx, char *map_data)
