@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 19:50:48 by chulee            #+#    #+#             */
-/*   Updated: 2022/10/13 19:50:13 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/17 15:20:33 by chulee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -296,6 +296,9 @@ void	ft_init(t_mlx *mlx)
 	ft_memset(mlx, 0, sizeof(t_mlx));
 	mlx->info.floor_color = -1;
 	mlx->info.ceilling_color = -1;
+	mlx->player.x = -1;
+	mlx->player.y = -1;
+	mlx->player.th = -1;
 }
 
 void	ft_file_type_check(char *filename)

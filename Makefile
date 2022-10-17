@@ -6,7 +6,7 @@
 #    By: youskim <youskim@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/26 19:41:21 by chulee            #+#    #+#              #
-#    Updated: 2022/10/13 20:50:52 by youskim          ###   ########.fr        #
+#    Updated: 2022/10/17 14:29:37 by chulee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRCS=srcs/main.c \
 	 srcs/get_next_line_utils.c \
 	 srcs/ft_memset.c \
 	 srcs/ft_strjoin.c \
-	 srcs/ft_isdigit.c
+	 srcs/ft_isdigit.c \
+	 srcs/ft_strchr.c
 OBJS = $(addprefix objs/, $(notdir $(SRCS:.c=.o)))
 SRCS_B=bonus/main_bonus.c
 OBJS_B = $(addprefix objs/, $(notdir $(SRCS_B:.c=.o)))

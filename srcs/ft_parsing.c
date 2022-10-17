@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 15:48:00 by youskim           #+#    #+#             */
-/*   Updated: 2022/10/17 14:13:36 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/17 16:22:47 by chulee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,13 @@ static void	ft_check_type(t_mlx *mlx, char *line)
 	int					i;
 
 	split = ft_split(line, ' ');
-	printf("line = %s, split[0] = %s, split[1] = %s, split[2] = %s\n", line, split[0], split[1], split[2]);
+	//printf("line = %s, split[0] = %s, split[1] = %s, split[2] = %s\n", line, split[0], split[1], split[2]);
 	ft_assert(split[0] != NULL && split[1] != NULL && (split[2] == NULL || split[2][0] == '\n'), \
 													"Map Type Error!");
 	i = -1;
 	while (++i < TYPE_LENGTH)
 	{
-		if (ft_strcmp(split[0], (char *)type[i]) == 0)
+		if (ft_strcmp((char *)type[i], split[0]) == 0)
 		{
 			if (i < 4 && ft_assert(mlx->info.path[i] == NULL, \
 								"Duplicate Metadata Error!"))
@@ -91,37 +91,176 @@ static void	ft_check_type(t_mlx *mlx, char *line)
 			else if (i == 5 && ft_assert(mlx->info.ceilling_color == -1, \
 								"Duplicate Metadata Error!"))
 				mlx->info.ceilling_color = ft_parse_rgb(split[1]);
+			break ;
 		}
+		ft_assert(i != TYPE_LENGTH - 1, "Metadata Error!");
 	}
 	ft_split_clear(split);
 }
 
 void	ft_map_size_check(t_mlx *mlx, char **split)
 {
-	
+	int	i;
+	int	max_width;
+
+	i = -1;
+	max_width = 0;
+	while (split[++i] != NULL)
+	{
+		if (max_width < ft_strlen(split[i]))
+			max_width = ft_strlen(split[i]);
+	}
+	mlx->info.map_h = i;
+	mlx->info.map_w = max_width;
+	mlx->info.map = malloc(sizeof(int *) * mlx->info.map_h);
+	ft_assert(mlx->info.map != NULL, "Malloc Error!");
+	i = -1;
+	while (++i < mlx->info.map_h)
+	{
+		mlx->info.map[i] = malloc(sizeof(int) * mlx->info.map_w);
+		ft_assert(mlx->info.map[i] != NULL, "Malloc Error!");
+		ft_memset(mlx->info.map[i], -1, mlx->info.map_w * sizeof(int));
+	}
 }
 
-void	ft_check_map_surround_wall(mt_mlx *mlx, char **split)
+void	ft_setting_player(t_mlx *mlx, int x, int y, char th)
 {
-
+	ft_assert(mlx->player.x == -1, "Player Duplicate Error");
+	mlx->player.x = x;
+	mlx->player.y = y;
+	if (th == 'E')
+		mlx->player.th = 0;
+	else if (th == 'N')
+		mlx->player.th = 90;
+	else if (th == 'W')
+		mlx->player.th = 180;
+	else if (th == 'S')
+		mlx->player.th = 270;
 }
 
-void	ft_check_validate(mt_mlx *mlx, char **split)
+void	ft_save_map(t_mlx *mlx, char **split)
 {
+	int	i;
+	int	j;
 
+	i = -1;
+	while (split[++i] != NULL)
+	{
+		j = -1;
+		while (split[i][++j] != '\0')
+		{
+			ft_assert(ft_strchr("01EWSN ", split[i][j]) != NULL, "Map Element Error");
+			if (ft_strchr("EWSN", split[i][j]) != NULL)
+				ft_setting_player(mlx, i, j, split[i][j]);
+			if (ft_strchr("0EWSN", split[i][j]) != NULL)
+				mlx->info.map[i][j] = 0;
+			else if (split[i][j] == '1')
+				mlx->info.map[i][j] = 1;
+			else if (split[i][j] == ' ')
+				mlx->info.map[i][j] = -1;
+		}
+	}
+	ft_assert(mlx->player.x != -1, "Player empty!");
 }
 
-void	ft_save_map(mt_mlx *mlx, char **split)
+void	ft_check_validate_func(t_mlx *mlx, int i, int j)
+{
+	if (i - 1 >= 0)
+		ft_assert(mlx->info.map[i - 1][j] == 1 || mlx->info.map[i - 1][j] == -1, "Map error!");
+	if (i + 1 < mlx->info.map_h)
+		ft_assert(mlx->info.map[i + 1][j] == 1 || mlx->info.map[i + 1][j] == -1, "Map error!");
+	if (j + 1 < mlx->info.map_w)
+		ft_assert(mlx->info.map[i][j + 1] == 1 || mlx->info.map[i][j + 1] == -1, "Map error!");
+	if (j - 1 >= 0)
+		ft_assert(mlx->info.map[i][j - 1] == 1 || mlx->info.map[i][j - 1] == -1, "Map error!");
+	if (i - 1 >= 0 && j - 1 >= 0)
+		ft_assert(mlx->info.map[i - 1][j - 1] == 1 || mlx->info.map[i - 1][j - 1] == -1, "Map error!");
+	if (i - 1 >= 0 && j + 1 < mlx->info.map_w)
+		ft_assert(mlx->info.map[i - 1][j + 1] == 1 || mlx->info.map[i - 1][j + 1] == -1, "Map error!");
+	if (i + 1 < mlx->info.map_h && j - 1 >= 0)
+		ft_assert(mlx->info.map[i + 1][j - 1] == 1 || mlx->info.map[i + 1][j - 1] == -1, "Map error!");
+	if (i + 1 < mlx->info.map_h && j + 1 < mlx->info.map_w)
+		ft_assert(mlx->info.map[i + 1][j + 1] == 1 || mlx->info.map[i + 1][j + 1] == -1, "Map error!");
+}
+
+void	ft_check_validate(t_mlx *mlx)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (++i < mlx->info.map_h)
+	{
+		j = -1;
+		while (++j < mlx->info.map_w)
+		{
+			if (mlx->info.map[i][j] == -1)
+				ft_check_validate_func(mlx, i, j);
+		}
+	}
+}
+
+
+void	ft_check_map_surround_wall(t_mlx *mlx)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (++i < mlx->info.map_h)
+	{
+		j = -1;
+		while (++j < mlx->info.map_w)
+		{
+			if (i == 0 || i == mlx->info.map_h - 1)
+				ft_assert(mlx->info.map[i][j] == 1 \
+						|| mlx->info.map[i][j] == -1, "Map Must Surround wall Error");
+			else if (j == 0 || j == mlx->info.map_w - 1)
+				ft_assert(mlx->info.map[i][j] == 1 \
+						|| mlx->info.map[i][j] == -1, "Map Must Surround wall Error");
+		}
+	}
+}
+
+void	ft_check_empty_line(char **split)
+{
+	int	i;
+
+	i = 0;
+	while (split[i] != NULL)
+	{
+		if (split[i][0] != '\n')
+			ft_assert(ft_strchr(split[i], '1') != NULL, "Map Parsing Error");
+		i++;
+	}
+}
+
+void	ft_rotate_map(t_mlx *mlx, char **split)
 {
 
 }
 
 void	ft_init_map(t_mlx *mlx, char **split)
 {
+	ft_check_empty_line(split);
 	ft_map_size_check(mlx, split);
-	ft_check_map_surround_wall(mlx, split);
-	ft_check_validate(mlx, split);
 	ft_save_map(mlx, split);
+	for (int i = 0; i < mlx->info.map_h; i++)
+	{
+		for (int j = 0; j <mlx->info.map_w; j++)
+		{
+			if (mlx->info.map[i][j] == -1)
+				printf("x");
+			if (mlx->info.map[i][j] == 0)
+				printf("0");
+			if (mlx->info.map[i][j] == 1)
+				printf("1");
+		}
+		printf("\n");
+	}
+	ft_check_map_surround_wall(mlx);
+	ft_check_validate(mlx);
+	ft_rotate_map(mlx, split);
 }
 
 static void	ft_check_map_data(t_mlx *mlx, char *map_data)
@@ -139,7 +278,7 @@ static void	ft_check_map_data(t_mlx *mlx, char *map_data)
 			ft_check_type(mlx, split[i]);
 		else
 		{
-			ft_init_map(mlx, split);
+			ft_init_map(mlx, split + i);
 			break ;
 		}
 	}
@@ -157,7 +296,6 @@ void	ft_check_line_feed(char *map_data)
 	i = -1;
 	while (map_data[++i] != '\0')
 	{
-		write(2, map_data + i, 1);
 		if (map_data[i] == '\n')
 		{
 			if (char_count > 0)

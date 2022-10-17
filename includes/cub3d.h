@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 17:44:58 by chulee            #+#    #+#             */
-/*   Updated: 2022/10/13 20:45:56 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/17 14:26:00 by chulee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,4 +136,6 @@ size_t	ft_strlen(const char *str);
 void	*ft_memset(void *b, int c, size_t n);
 char	*ft_strjoin(char const *s1, char const *s2);
 int		ft_isdigit(int c);
+char	*ft_strchr(const char *s, int c);
+
 #endif
