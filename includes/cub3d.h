@@ -6,13 +6,14 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 17:44:58 by chulee            #+#    #+#             */
-/*   Updated: 2022/10/17 14:26:00 by chulee           ###   ########.fr       */
+/*   Updated: 2022/10/17 17:31:07 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB_3D_H
 # define CUB_3D_H
 
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -38,14 +39,15 @@
 #define  KEY_A 0
 #define  KEY_S 1
 #define	 KEY_D 2
+#define  KEY_ESC 53
 #define	 X_EVENT_KEY_PRESS 2
 #define  IMG_SIZE 4
 #define  TYPE_LENGTH 6
 #define  true        1
 #define  false       0
 
-#define  SX         400     /* screen width */
-#define  SY         250     /* screen height */
+#define  SX         720     /* screen width */
+#define  SY         400     /* screen height */
 #define  FOV        60      /* field of view (in degree) */
 #define  FOV_H      deg2rad(FOV)
 #define  FOV_V      (FOV_H*(double)SY/(double)SX)
@@ -58,8 +60,8 @@ enum { VERT, HORIZ };
 
 typedef enum { DIR_N=0, DIR_E, DIR_W, DIR_S } dir_t;
 
-#define  MAPX   6
-#define  MAPY   5
+// #define  MAPX   6
+// #define  MAPY   5
 
 typedef struct	s_player
 {
@@ -106,7 +108,7 @@ typedef struct	s_DDA
 	double	dist_horiz;
 
 	int		hit_dir;
-	int 	hit;
+	bool 	hit;
 
 	int	map_x;
 	int	map_y;
