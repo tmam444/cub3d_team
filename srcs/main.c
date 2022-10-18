@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 19:50:48 by chulee            #+#    #+#             */
-/*   Updated: 2022/10/18 19:39:25 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/18 19:58:42 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ int	main(int ac, char **av)
 	ft_init(&mlx);
 	ft_parsing(&mlx, av[1]);
 	mlx.mlx_ptr = mlx_init();
+	ft_assert(mlx.mlx_ptr != NULL, "mlx init Error!");
 	mlx.win = mlx_new_window(mlx.mlx_ptr, SX, SY, "cub3d");
+	ft_assert(mlx.win != NULL, "mlx new window Error!");
 	ft_load_image(&mlx);
 	mlx_hook(mlx.win, X_EVENT_KEY_PRESS, 0, \
 			ft_key_event, &mlx);

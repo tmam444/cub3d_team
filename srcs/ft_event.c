@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 14:43:06 by youskim           #+#    #+#             */
-/*   Updated: 2022/10/18 16:20:08 by chulee           ###   ########.fr       */
+/*   Updated: 2022/10/18 20:08:52 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	ft_key_event(int keycode, t_mlx *mlx)
 	if (keycode == KEY_ESC)
 	{
 		ft_clear(mlx);
+		ft_clear_mlx(mlx);
 		exit(0);
 	}
 	else
@@ -82,5 +83,6 @@ int	ft_key_event(int keycode, t_mlx *mlx)
 int	ft_program_exit(t_mlx *mlx)
 {
 	ft_clear(mlx);
+	ft_clear_mlx(mlx);
 	exit(0);
 }

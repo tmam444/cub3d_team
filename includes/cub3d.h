@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 17:44:58 by chulee            #+#    #+#             */
-/*   Updated: 2022/10/18 19:38:00 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/18 20:08:47 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ char	*ft_strchr(const char *s, int c);
 void	ft_clear(t_mlx *mlx);
 int		map_validate_check(int x, int y, t_mlx *mlx);
 void	ft_split_clear(char **split);
+void	ft_clear_mlx(t_mlx *mlx);
 
 // event
 int		ft_player_rotate(int keycode, t_player *player);

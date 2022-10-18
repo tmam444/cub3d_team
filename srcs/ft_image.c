@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 19:57:03 by youskim           #+#    #+#             */
-/*   Updated: 2022/10/18 15:09:35 by chulee           ###   ########.fr       */
+/*   Updated: 2022/10/18 20:05:20 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	make_bg(t_mlx *mlx)
 	if (mlx->background.img == NULL)
 	{
 		mlx->background.img = mlx_new_image(mlx->mlx_ptr, SX, SY);
+		ft_assert(mlx->background.img != NULL, "image new error!");
 		mlx->background.data = (unsigned int *)mlx_get_data_addr \
 				(mlx->background.img, &mlx->background.bpp, \
 					&mlx->background.line_size, &mlx->background.endian);

@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:37:09 by chulee            #+#    #+#             */
-/*   Updated: 2022/10/18 19:43:46 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/18 19:56:16 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,7 @@ void	ft_check_empty_line(char **split)
 	i = 0;
 	while (split[i] != NULL)
 	{
-		if (split[i][0] != '\n')
-			ft_assert(ft_strchr(split[i], '1') != NULL, "Map Error");
+		ft_assert(ft_strchr(split[i], '1') != NULL, "Map Error");
 		i++;
 	}
 }
