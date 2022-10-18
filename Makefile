@@ -6,18 +6,43 @@
 #    By: youskim <youskim@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/26 19:41:21 by chulee            #+#    #+#              #
-#    Updated: 2022/10/12 22:20:43 by youskim          ###   ########.fr        #
+#    Updated: 2022/10/18 19:35:00 by youskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=cub3D
 B_NAME=cub3D_bonus
-SRCS=srcs/main.c
+SRCS=srcs/main.c \
+	 srcs/ft_atoi.c \
+	 srcs/ft_parsing.c \
+	 srcs/ft_split.c \
+	 srcs/ft_strdup.c \
+	 srcs/ft_strcmp.c \
+	 srcs/ft_strlen.c \
+	 srcs/get_next_line.c \
+	 srcs/get_next_line_utils.c \
+	 srcs/ft_memset.c \
+	 srcs/ft_strjoin.c \
+	 srcs/ft_isdigit.c \
+	 srcs/ft_strchr.c \
+	 srcs/ft_event.c \
+	 srcs/ft_image.c \
+	 srcs/ft_math.c \
+	 srcs/ft_calc.c \
+	 srcs/ft_util.c \
+	 srcs/ft_render.c \
+	 srcs/ft_dda.c \
+	 srcs/ft_parsing1.c \
+	 srcs/ft_parsing2.c \
+	 srcs/ft_parsing3.c \
+	 srcs/ft_parsing_util.c \
+	 srcs/ft_minimap.c
+	 
 OBJS = $(addprefix objs/, $(notdir $(SRCS:.c=.o)))
 SRCS_B=bonus/main_bonus.c
 OBJS_B = $(addprefix objs/, $(notdir $(SRCS_B:.c=.o)))
 CC = cc
-CFLAGS = 
+CFLAGS = -Wall -Wextra -Werror
 MLX_LIB = ./minilibx_opengl_20191021
 MLX_FLAGS = -lm -L$(MLX_LIB) -lmlx -framework OpenGL -framework AppKit
 
