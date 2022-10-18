@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 14:45:59 by youskim           #+#    #+#             */
-/*   Updated: 2022/10/18 14:48:17 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/18 15:08:40 by chulee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,23 @@ int	ft_assert(int check, const char *err_msg)
 	return (1);
 }
 
-int map_validate_check( int x, int y, t_mlx *mlx)
+int	map_validate_check(int x, int y, t_mlx *mlx)
 {
 	if (x >= 0 && x < mlx->info.map_h && y >= 0 && y < mlx->info.map_w)
 		return (mlx->info.map[x][y]);
 	else
 		return (-1);
+}
+
+void	ft_split_clear(char **split)
+{
+	int	i;
+
+	i = 0;
+	while (split[i] != NULL)
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
 }

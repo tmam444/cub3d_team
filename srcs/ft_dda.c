@@ -6,85 +6,112 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:01:01 by youskim           #+#    #+#             */
-/*   Updated: 2022/10/18 15:04:59 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/18 17:22:32 by chulee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+#include <math.h>
 
-static const double ANGLE_PER_PIXEL = FOV_H / (SX-1.);
-static const double FOVH_2 = FOV_H / 2.0;
-
-int get_wall_intersection( double ray, double px, double py, dir_t* wdir, double* wx, double* wy, t_mlx *mlx)
+void	ft_dda_setting(double ray, t_player *player, t_DDA *dda)
 {
-    int xstep = check_zero( cos(ray) );  /* +1 (right), 0 (no change), -1 (left) */
-    int ystep = check_zero( sin(ray) );  /* +1 (up),    0 (no change), -1 (down) */
-
-    double xslope = (xstep == 0) ? INFINITY : tan(ray);
-    double yslope = (ystep == 0) ? INFINITY : 1./tan(ray);
-
-    double nx = (xstep > 0) ? floor(px)+1 : ((xstep < 0) ? ceil(px)-1 : px);
-    double ny = (ystep > 0) ? floor(py)+1 : ((ystep < 0) ? ceil(py)-1 : py);
-
-    double f=INFINITY, g=INFINITY;
-    int hit = false;
-    int hit_side; /* either VERT or HORIZ */
-
-    while( !hit )
-    {
-        int mapx, mapy;
-
-        if( xstep != 0 ) f = xslope * (nx-px) + py;
-        if( ystep != 0 ) g = yslope * (ny-py) + px;
-
-        /* which is nearer to me - VERT(nx,f) or HORIZ(g,ny)? */
-        double dist_v = ray_dist(px, py, nx, f);
-        double dist_h = ray_dist(px, py, g, ny);
-
-        if( dist_v < dist_h ) { /* VERT is nearer; go along x-axis */
-            mapx = (xstep == 1) ? (int)(nx) : (int)(nx)-1 ;
-            mapy = (int) f;
-            hit_side = VERT;
-        }
-        else {  /* HORIZ is nearer; go along y-axis */
-            mapx = (int) g;
-            mapy = (ystep == 1) ? (int)(ny) : (int)(ny)-1 ;
-            hit_side = HORIZ;
-        }
-        int cell = map_validate_check(mapx, mapy, mlx);
-        if( cell < 0 ) break;   /* out of map */
-
-        if( cell == 1 ) {   /* hit wall? */
-            if( hit_side == VERT ) {
-                *wdir = (xstep > 0) ? DIR_E : DIR_W;
-                *wx = nx;
-                *wy = f;
-            }
-            else { /* HORIZ */
-                *wdir = (ystep > 0) ? DIR_N : DIR_S;
-                *wx = g;
-                *wy = ny;
-            }
-            hit = true;
-            break;
-        }
-
-        if( hit_side == VERT ) nx += xstep;
-        else ny += ystep;
-    }
-    /* end of while(!hit) */
-
-    return hit;
+	dda->xstep = check_zero(cos(ray));
+	dda->ystep = check_zero(sin(ray));
+	if (dda->xstep > 0)
+		dda->nx = floor(player->x) + 1;
+	else if (dda->xstep < 0)
+		dda->nx = ceil(player->x) - 1;
+	else
+		dda->nx = player->x;
+	if (dda->ystep > 0)
+		dda->ny = floor(player->y) + 1;
+	else if (dda->ystep < 0)
+		dda->ny = ceil(player->y) - 1;
+	else
+		dda->ny = player->y;
+	dda->fx = INFINITY;
+	dda->gy = INFINITY;
 }
 
-double cast_single_ray( int x, t_player *player, dir_t *wdir, t_mlx *mlx)
+void	ft_calc_next_grid(double ray, t_mlx *mlx, t_player *p)
 {
-    double ray = (player->th + FOVH_2) - (x * ANGLE_PER_PIXEL);
+	if (mlx->dda.xstep != 0)
+		mlx->dda.fx = tan(ray) * (mlx->dda.nx - p->x) + p->y;
+	if (mlx->dda.ystep != 0)
+		mlx->dda.gy = (1 / tan(ray)) * (mlx->dda.ny - p->y) + p->x;
+	mlx->dda.dist_vert = ray_dist(p->x, p->y, mlx->dda.nx, mlx->dda.fx);
+	mlx->dda.dist_horiz = ray_dist(p->x, p->y, mlx->dda.gy, mlx->dda.ny);
+	if (mlx->dda.dist_vert < mlx->dda.dist_horiz)
+	{
+		mlx->dda.map_y = (int) mlx->dda.fx;
+		if (mlx->dda.xstep == 1)
+			mlx->dda.map_x = (int)(mlx->dda.nx);
+		else
+			mlx->dda.map_x = (int)(mlx->dda.nx) - 1;
+		mlx->dda.hit_dir = VERT;
+	}
+	else
+	{
+		mlx->dda.map_x = (int) mlx->dda.gy;
+		if (mlx->dda.ystep == 1)
+			mlx->dda.map_y = (int)(mlx->dda.ny);
+		else
+			mlx->dda.map_y = (int)(mlx->dda.ny) - 1;
+		mlx->dda.hit_dir = HORIZ;
+	}
+}
 
-    if( get_wall_intersection(ray, player->x, player->y, wdir, &player->wx, &player->wy, mlx) == false )
-        return INFINITY; /* no intersection - maybe bad map? */
+void	ft_setting_hit_value(t_mlx *mlx, t_dir *wdir)
+{
+	if (mlx->dda.hit_dir == VERT)
+	{
+		if (mlx->dda.xstep > 0)
+			*wdir = DIR_E;
+		else
+			*wdir = DIR_W;
+		mlx->dda.wx = mlx->dda.nx;
+		mlx->dda.wy = mlx->dda.fx;
+	}
+	else
+	{
+		if (mlx->dda.ystep > 0)
+			*wdir = DIR_N;
+		else
+			*wdir = DIR_S;
+		mlx->dda.wx = mlx->dda.gy;
+		mlx->dda.wy = mlx->dda.ny;
+	}
+}
 
-    double wdist = ray_dist(player->x, player->y, player->wx, player->wy);
-	wdist *= cos(player->th - ray);  /* 보정 */
-    return wdist;
+void	calc_bump_wall(double ray, t_dir *wdir, t_mlx *mlx)
+{
+	int	cell;
+
+	ft_dda_setting(ray, &mlx->player, &mlx->dda);
+	while (1)
+	{
+		ft_calc_next_grid(ray, mlx, &mlx->player);
+		cell = map_validate_check(mlx->dda.map_x, mlx->dda.map_y, mlx);
+		if (cell == 1)
+		{
+			ft_setting_hit_value(mlx, wdir);
+			return ;
+		}
+		if (mlx->dda.hit_dir == VERT)
+			mlx->dda.nx += mlx->dda.xstep;
+		else
+			mlx->dda.ny += mlx->dda.ystep;
+	}
+}
+
+double	cast_single_ray(int x, t_dir *wdir, t_mlx *mlx)
+{
+	const double	fovh_2 = FOV_H / 2.0;
+	const double	ray = (mlx->player.th + fovh_2) - (x * FOV_H / (SX - 1.));
+	double			wdist;
+
+	calc_bump_wall(ray, wdir, mlx);
+	wdist = ray_dist(mlx->player.x, mlx->player.y, mlx->dda.wx, mlx->dda.wy);
+	wdist *= cos(mlx->player.th - ray);
+	return (wdist);
 }

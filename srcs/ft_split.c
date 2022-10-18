@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 16:49:53 by youskim           #+#    #+#             */
-/*   Updated: 2022/10/13 20:02:38 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/18 17:25:02 by chulee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ static char	*cut_str(char const *s, int len)
 	int		i;
 
 	cut = (char *)malloc(sizeof(char) * (len + 1));
-	if (cut == 0)
-		ft_assert(true, "Malloc Error!");
+	ft_assert(cut != NULL, "Malloc Error!");
 	i = 0;
 	while (i < len)
 	{
@@ -58,7 +57,7 @@ static char	**ft_free(char **arr, int count)
 		free(arr[count - 1]);
 		count--;
 	}
-	ft_assert(true, "Malloc Error!");
+	ft_assert(FALSE, "Malloc Error!");
 	return (NULL);
 }
 
@@ -98,20 +97,6 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	count = check_count(s, c);
 	arr = (char **)malloc(sizeof(char *) * (count + 1));
-	if (arr == 0)
-		ft_assert(true, "Malloc Error!");
+	ft_assert(arr != NULL, "Malloc Error!");
 	return (ft_split_result(arr, s, c, count));
-}
-
-void	ft_split_clear(char **split)
-{
-	int	i;
-
-	i = 0;
-	while (split[i] != NULL)
-	{
-		free(split[i]);
-		i++;
-	}
-	free(split);
 }

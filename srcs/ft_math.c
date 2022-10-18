@@ -3,36 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_math.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: chulee <chulee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/18 14:47:53 by youskim           #+#    #+#             */
-/*   Updated: 2022/10/18 14:48:07 by youskim          ###   ########.fr       */
+/*   Created: 2022/10/18 15:59:27 by chulee            #+#    #+#             */
+/*   Updated: 2022/10/18 16:21:40 by chulee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	check_zero(double d)
+double	ft_deg_to_rad(double d)
 {
-	if (fabs(d) < EPS)
-	{
-		return (0);
-	}
-	else
-	{
-		if (d > 0)
-			return (1);
-		else
-			return (-1);
-	}	
+	return (d * M_PI / 180.0);
 }
 
-double	ray_dist(double player_x, double player_y, double x, double y)
+double	ft_min(double a, double b)
 {
-	double	dx;
-	double	dy;
+	if (a < b)
+		return (a);
+	else
+		return (b);
+}
 
-	dx = player_x - x;
-	dy = player_y - y;
-	return (sqrt(dx*dx + dy*dy));
+double	ft_max(double a, double b)
+{
+	if (a < b)
+		return (b);
+	else
+		return (a);
 }

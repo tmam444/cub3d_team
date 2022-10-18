@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 14:43:06 by youskim           #+#    #+#             */
-/*   Updated: 2022/10/18 14:43:52 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/18 16:20:08 by chulee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ int	ft_player_rotate(int keycode, t_player *player)
 		player->th += 1 * ROT_UNIT;
 	else if (keycode == KEY_RIGHT)
 		player->th -= 1 * ROT_UNIT;
-    if (player->th < 0)
-		player->th += _2PI;
-    else if (player->th > _2PI)
-		player->th -= _2PI;
+	if (player->th < 0)
+		player->th += M_PI * 2;
+	else if (player->th > M_PI * 2)
+		player->th -= M_PI * 2;
 	return (0);
 }
 
@@ -50,7 +50,6 @@ int	ft_move_wasd(int keycode, t_player *player)
 	return (0);
 }
 
-
 int	ft_player_move(int keycode, t_mlx *mlx)
 {
 	t_player	temp;
@@ -70,8 +69,6 @@ int	ft_player_move(int keycode, t_mlx *mlx)
 
 int	ft_key_event(int keycode, t_mlx *mlx)
 {
-	int	i;
-
 	if (keycode == KEY_ESC)
 	{
 		ft_clear(mlx);

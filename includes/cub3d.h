@@ -6,14 +6,13 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 17:44:58 by chulee            #+#    #+#             */
-/*   Updated: 2022/10/18 15:04:14 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/18 17:29:37 by chulee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB_3D_H
-# define CUB_3D_H
+#ifndef CUB3D_H
+# define CUB3D_H
 
-# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -24,53 +23,46 @@
 # include "get_next_line.h"
 # include "../minilibx_opengl_20191021/mlx.h"
 
-#define  Floor 0xFFFFFF
-#define  Ceiling 0x000000
+# define EPS				(1e-6)
+# define KEY_LEFT			123
+# define KEY_RIGHT			124
+# define KEY_W				13
+# define KEY_A				0
+# define KEY_S				1
+# define KEY_D				2
+# define KEY_ESC			53
+# define X_EVENT_KEY_PRESS	2
+# define IMG_SIZE 			4
+# define TYPE_LENGTH 		6
+# define TRUE        		1
+# define FALSE      		0
+# define SX					400
+# define SY					250
+# define FOV				60
+# define FOV_H				1.0472
+# define FOV_V				0.83776
+# define WALL_H				1.0
+# define ROT_UNIT			0.05
+# define MOVE_UNIT			0.2
 
-#define  EPS            (1e-6)
-#define  is_zero(d)     (fabs(d) < EPS)
-#define  deg2rad(d)     ((d)*M_PI/180.0)    /* degree to radian */
-#define  rad2deg(d)     ((d)*180.0/M_PI)    /* radian to degree */
-#define  min(a,b)       ((a)<(b)? (a):(b))
-#define  max(a,b)       ((a)>(b)? (a):(b))
-#define  KEY_LEFT	123
-#define  KEY_RIGHT	124
-#define  KEY_W 13
-#define  KEY_A 0
-#define  KEY_S 1
-#define	 KEY_D 2
-#define  KEY_ESC 53
-#define	 X_EVENT_KEY_PRESS 2
-#define  IMG_SIZE 4
-#define  TYPE_LENGTH 6
-#define  true        1
-#define  false       0
+enum e_hit_dir {
+	VERT,
+	HORIZ
+};
 
-#define  SX         1280    /* screen width */
-#define  SY         1024     /* screen height */
-#define  FOV        60      /* field of view (in degree) */
-#define  FOV_H      deg2rad(FOV)
-#define  FOV_V      (FOV_H*(double)SY/(double)SX)
-#define  WALL_H     1.0
-#define  ROT_UNIT   0.05
-#define  MOVE_UNIT  0.2
-#define  _2PI       2 * M_PI /* 2 * M_PI */
+typedef enum e_dir {
+	DIR_N=0,
+	DIR_E,
+	DIR_W,
+	DIR_S
+}	t_dir;
 
-enum { VERT, HORIZ };
-
-typedef enum { DIR_N=0, DIR_E, DIR_W, DIR_S } dir_t;
-
-// #define  MAPX   6
-// #define  MAPY   5
-
-typedef struct	s_player
+typedef struct s_player
 {
 	double	x;
-	double	wx;
 	double	y;
-	double	wy;
 	double	th;
-}				t_player;
+}	t_player;
 
 typedef struct s_img
 {
@@ -81,7 +73,7 @@ typedef struct s_img
 	int				endian;
 	int				w;
 	int				h;
-}			t_img;
+}	t_img;
 
 typedef struct s_info
 {
@@ -91,30 +83,26 @@ typedef struct s_info
 	char		*path[IMG_SIZE];
 	int			floor_color;
 	int			ceilling_color;
-}			t_info;
+}	t_info;
 
-typedef struct	s_DDA
+typedef struct s_DDA
 {
-	int	xstep;
-	int	ystep;
-
+	int		xstep;
+	int		ystep;
 	double	fx;
 	double	gy;
-
 	double	nx;
 	double	ny;
-
 	double	dist_vert;
 	double	dist_horiz;
-
 	int		hit_dir;
-	bool 	hit;
+	int		map_x;
+	int		map_y;
+	double	wx;
+	double	wy;
+}	t_DDA;
 
-	int	map_x;
-	int	map_y;
-}		t_DDA;
-
-typedef struct	s_mlx
+typedef struct s_mlx
 {
 	void		*mlx_ptr;
 	void		*win;
@@ -122,10 +110,20 @@ typedef struct	s_mlx
 	t_info		info;
 	t_img		background;
 	t_img		imgs[IMG_SIZE];
-	t_DDA		DDA;
+	t_DDA		dda;
 }				t_mlx;
 
+// parsing
 void	ft_parsing(t_mlx *info, char *file);
+void	ft_check_type(t_mlx *mlx, char *line);
+void	ft_setting_player(t_mlx *mlx, int x, int y, char th);
+void	ft_save_map(t_mlx *mlx, char **split);
+void	ft_map_size_check(t_mlx *mlx, char **split);
+void	ft_rotate_map(t_mlx *mlx);
+void	ft_check_empty_line(char **split);
+void	ft_check_map_surround_wall(t_mlx *mlx);
+void	ft_check_validate(t_mlx *mlx);
+void	ft_rotate_player(t_mlx *mlx, int **new_map);
 
 //utils
 char	**ft_split(char const *s, char c);
@@ -140,7 +138,8 @@ char	*ft_strjoin(char const *s1, char const *s2);
 int		ft_isdigit(int c);
 char	*ft_strchr(const char *s, int c);
 void	ft_clear(t_mlx *mlx);
-int 	map_validate_check( int x, int y, t_mlx *mlx);
+int		map_validate_check(int x, int y, t_mlx *mlx);
+void	ft_split_clear(char **split);
 
 // event
 int		ft_player_rotate(int keycode, t_player *player);
@@ -155,6 +154,11 @@ void	pixel_put(t_mlx *mlx, int x, int y, int color);
 void	make_bg(t_mlx *mlx);
 
 // math
+double	ft_deg_to_rad(double d);
+double	ft_min(double a, double b);
+double	ft_max(double a, double b);
+
+// calc
 int		check_zero(double d);
 double	ray_dist(double player_x, double player_y, double x, double y);
 
@@ -162,8 +166,7 @@ double	ray_dist(double player_x, double player_y, double x, double y);
 int		ft_render(t_mlx *mlx);
 
 // ray casting
-int		get_wall_intersection( double ray, double px, double py, dir_t* wdir, double* wx, double* wy, t_mlx *mlx);
-double	cast_single_ray( int x, t_player *player, dir_t *wdir, t_mlx *mlx);
-
+double	cast_single_ray(int x, t_dir *wdir, t_mlx *mlx);
+void	calc_bump_wall(double ray, t_dir *wdir, t_mlx *mlx);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 19:57:03 by youskim           #+#    #+#             */
-/*   Updated: 2022/10/18 14:56:56 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/18 15:09:35 by chulee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static unsigned int	*get_image_addr(t_img *img, int DIR)
 {
 	unsigned int	*ret;
 
-	ret = (unsigned int*)mlx_get_data_addr(img[DIR].img, &img[DIR].bpp, \
+	ret = (unsigned int *)mlx_get_data_addr(img[DIR].img, &img[DIR].bpp, \
 			&img[DIR].line_size, &img[DIR].endian);
 	return (ret);
 }
