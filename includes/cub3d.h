@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 17:44:58 by chulee            #+#    #+#             */
-/*   Updated: 2022/10/17 20:09:01 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/18 15:04:14 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@
 #define  true        1
 #define  false       0
 
-#define  SX         1280     /* screen width */
+#define  SX         1280    /* screen width */
 #define  SY         1024     /* screen height */
 #define  FOV        60      /* field of view (in degree) */
 #define  FOV_H      deg2rad(FOV)
 #define  FOV_V      (FOV_H*(double)SY/(double)SX)
 #define  WALL_H     1.0
-#define  ROT_UNIT   0.3
-#define  MOVE_UNIT  0.3
+#define  ROT_UNIT   0.05
+#define  MOVE_UNIT  0.2
 #define  _2PI       2 * M_PI /* 2 * M_PI */
 
 enum { VERT, HORIZ };
@@ -140,5 +140,30 @@ char	*ft_strjoin(char const *s1, char const *s2);
 int		ft_isdigit(int c);
 char	*ft_strchr(const char *s, int c);
 void	ft_clear(t_mlx *mlx);
+int 	map_validate_check( int x, int y, t_mlx *mlx);
+
+// event
+int		ft_player_rotate(int keycode, t_player *player);
+int		ft_move_wasd(int keycode, t_player *player);
+int		ft_player_move(int keycode, t_mlx *mlx);
+int		ft_key_event(int keycode, t_mlx *mlx);
+int		ft_program_exit(t_mlx *mlx);
+
+// image
+void	ft_load_image(t_mlx *mlx);
+void	pixel_put(t_mlx *mlx, int x, int y, int color);
+void	make_bg(t_mlx *mlx);
+
+// math
+int		check_zero(double d);
+double	ray_dist(double player_x, double player_y, double x, double y);
+
+// render
+int		ft_render(t_mlx *mlx);
+
+// ray casting
+int		get_wall_intersection( double ray, double px, double py, dir_t* wdir, double* wx, double* wy, t_mlx *mlx);
+double	cast_single_ray( int x, t_player *player, dir_t *wdir, t_mlx *mlx);
+
 
 #endif

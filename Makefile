@@ -6,7 +6,7 @@
 #    By: youskim <youskim@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/26 19:41:21 by chulee            #+#    #+#              #
-#    Updated: 2022/10/17 17:20:07 by youskim          ###   ########.fr        #
+#    Updated: 2022/10/18 15:04:34 by youskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,12 @@ SRCS=srcs/main.c \
 	 srcs/ft_strjoin.c \
 	 srcs/ft_isdigit.c \
 	 srcs/ft_strchr.c \
+	 srcs/ft_event.c \
+	 srcs/ft_image.c \
+	 srcs/ft_math.c \
+	 srcs/ft_util.c \
+	 srcs/ft_render.c \
+	 srcs/ft_dda.c
 
 OBJS = $(addprefix objs/, $(notdir $(SRCS:.c=.o)))
 SRCS_B=bonus/main_bonus.c
