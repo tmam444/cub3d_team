@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dda.c                                           :+:      :+:    :+:   */
+/*   ft_dda_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:01:01 by youskim           #+#    #+#             */
-/*   Updated: 2022/10/18 20:25:56 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/18 20:25:07 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 
 void	ft_dda_setting(double ray, t_player *player, t_DDA *dda)
 {

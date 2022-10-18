@@ -6,7 +6,7 @@
 #    By: youskim <youskim@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/26 19:41:21 by chulee            #+#    #+#              #
-#    Updated: 2022/10/18 20:13:11 by youskim          ###   ########.fr        #
+#    Updated: 2022/10/18 20:31:03 by youskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,9 +37,32 @@ SRCS=srcs/main.c \
 	 srcs/ft_parsing3.c \
 	 srcs/ft_parsing_util.c \
 	 srcs/ft_minimap.c
-	 
 OBJS = $(addprefix objs/, $(notdir $(SRCS:.c=.o)))
-SRCS_B=bonus/main_bonus.c
+SRCS_B=bonus/main_bonus.c \
+	 bonus/ft_atoi_bonus.c \
+	 bonus/ft_parsing_bonus.c \
+	 bonus/ft_split_bonus.c \
+	 bonus/ft_strdup_bonus.c \
+	 bonus/ft_strcmp_bonus.c \
+	 bonus/ft_strlen_bonus.c \
+	 bonus/get_next_line_bonus.c \
+	 bonus/get_next_line_utils_bonus.c \
+	 bonus/ft_memset_bonus.c \
+	 bonus/ft_strjoin_bonus.c \
+	 bonus/ft_isdigit_bonus.c \
+	 bonus/ft_strchr_bonus.c \
+	 bonus/ft_event_bonus.c \
+	 bonus/ft_image_bonus.c \
+	 bonus/ft_math_bonus.c \
+	 bonus/ft_calc_bonus.c \
+	 bonus/ft_util_bonus.c \
+	 bonus/ft_render_bonus.c \
+	 bonus/ft_dda_bonus.c \
+	 bonus/ft_parsing1_bonus.c \
+	 bonus/ft_parsing2_bonus.c \
+	 bonus/ft_parsing3_bonus.c \
+	 bonus/ft_parsing_util_bonus.c \
+	 bonus/ft_minimap_bonus.c
 OBJS_B = $(addprefix objs/, $(notdir $(SRCS_B:.c=.o)))
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
@@ -63,12 +86,15 @@ $(B_NAME) : $(OBJ_FILES)
 objs/%.o : srcs/%.c
 		$(CC) $(CFLAGS) -c $< -o $@
 
+objs/%.o : bonus/%.c
+		$(CC) $(CFLAGS) -c $< -o $@
+
 clean :
 		$(MAKE) -C $(MLX_LIB) clean
-		rm -f $(OBJS)
+		rm -f $(OBJS) $(OBJS_B)
 
 fclean : clean
-		rm -f $(NAME)
+		rm -f $(NAME) $(B_NAME)
 
 bonus : 
 		make WITH_BONUS=1 $(B_NAME)
