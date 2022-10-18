@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 14:45:59 by youskim           #+#    #+#             */
-/*   Updated: 2022/10/18 20:08:40 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/18 20:12:52 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_clear_mlx(t_mlx *mlx)
 	i = -1;
 	while (++i < 4)
 		if (mlx->imgs[i].img)
-			mlx_destroy_image(mlx->mlx_ptr, mlx->imgs[i]);
+			mlx_destroy_image(mlx->mlx_ptr, mlx->imgs[i].img);
 	if (mlx->background.img)
 		mlx_destroy_image(mlx->mlx_ptr, mlx->background.img);
 	mlx_destroy_window(mlx->mlx_ptr, mlx->win);
