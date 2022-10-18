@@ -6,7 +6,7 @@
 #    By: youskim <youskim@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/26 19:41:21 by chulee            #+#    #+#              #
-#    Updated: 2022/10/18 17:23:26 by chulee           ###   ########.fr        #
+#    Updated: 2022/10/18 19:32:39 by youskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,8 @@ SRCS=srcs/main.c \
 	 srcs/ft_parsing2.c \
 	 srcs/ft_parsing3.c \
 	 srcs/ft_parsing_util.c \
-
+	 srcs/ft_minimap.c
+	 
 OBJS = $(addprefix objs/, $(notdir $(SRCS:.c=.o)))
 SRCS_B=bonus/main_bonus.c
 OBJS_B = $(addprefix objs/, $(notdir $(SRCS_B:.c=.o)))

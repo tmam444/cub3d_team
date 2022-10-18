@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 17:44:58 by chulee            #+#    #+#             */
-/*   Updated: 2022/10/18 17:29:37 by chulee           ###   ########.fr       */
+/*   Updated: 2022/10/18 19:32:23 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@
 # define TYPE_LENGTH 		6
 # define TRUE        		1
 # define FALSE      		0
-# define SX					400
-# define SY					250
+# define SX					1280
+# define SY					960
 # define FOV				60
 # define FOV_H				1.0472
 # define FOV_V				0.83776
@@ -164,6 +164,7 @@ double	ray_dist(double player_x, double player_y, double x, double y);
 
 // render
 int		ft_render(t_mlx *mlx);
+void	ft_render_minimap(t_mlx *mlx);
 
 // ray casting
 double	cast_single_ray(int x, t_dir *wdir, t_mlx *mlx);
