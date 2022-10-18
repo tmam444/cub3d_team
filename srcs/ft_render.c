@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:01:02 by youskim           #+#    #+#             */
-/*   Updated: 2022/10/18 17:31:36 by chulee           ###   ########.fr       */
+/*   Updated: 2022/10/18 17:51:51 by chulee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,8 @@ void	ft_render_minimap(t_mlx *mlx)
 	{
 		for (int j = mlx->player.y - 2; j < mlx->player.y + 3; j++)
 		{
-			color = 0x000000;
-			printf("x = %d, y = %d\n", (int)mlx->player.x, (int)mlx->player.y);
-			if (i >= 0 && i < mlx->info.map_w && j >= 0 && j < mlx->info.map_h)
+			color = 0xFF0000;
+			if (i >= 0 && i < mlx->info.map_h && j >= 0 && j < mlx->info.map_w)
 			{
 				if (i == (int)mlx->player.x && j == (int)mlx->player.y)
 					color = 0xFFFF00;
