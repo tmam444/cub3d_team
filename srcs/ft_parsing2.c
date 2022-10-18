@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chulee <chulee@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:37:12 by chulee            #+#    #+#             */
-/*   Updated: 2022/10/18 17:26:24 by chulee           ###   ########.fr       */
+/*   Updated: 2022/10/18 19:43:21 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_save_map(t_mlx *mlx, char **split)
 		while (split[i][++j] != '\0')
 		{
 			ft_assert(ft_strchr("01EWSN ", split[i][j]) != NULL, \
-					"Map Element Error");
+					"Map Error");
 			if (ft_strchr("EWSN", split[i][j]) != NULL)
 				ft_setting_player(mlx, i, j, split[i][j]);
 			if (ft_strchr("0EWSN", split[i][j]) != NULL)

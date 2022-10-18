@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 17:44:58 by chulee            #+#    #+#             */
-/*   Updated: 2022/10/18 19:32:23 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/18 19:38:00 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define FOV_H				1.0472
 # define FOV_V				0.83776
 # define WALL_H				1.0
-# define ROT_UNIT			0.05
+# define ROT_UNIT			0.1
 # define MOVE_UNIT			0.2
 
 enum e_hit_dir {

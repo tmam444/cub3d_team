@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chulee <chulee@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:37:09 by chulee            #+#    #+#             */
-/*   Updated: 2022/10/18 15:46:56 by chulee           ###   ########.fr       */
+/*   Updated: 2022/10/18 19:43:46 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	ft_check_empty_line(char **split)
 	while (split[i] != NULL)
 	{
 		if (split[i][0] != '\n')
-			ft_assert(ft_strchr(split[i], '1') != NULL, "Map Parsing Error");
+			ft_assert(ft_strchr(split[i], '1') != NULL, "Map Error");
 		i++;
 	}
 }

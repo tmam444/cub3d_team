@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 15:48:00 by youskim           #+#    #+#             */
-/*   Updated: 2022/10/18 15:53:57 by chulee           ###   ########.fr       */
+/*   Updated: 2022/10/18 19:41:46 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,13 @@ static void	ft_check_line_feed(char *map_data)
 			if (char_count > 0)
 				line_count++;
 			if (line_count >= 7)
-				ft_assert(char_count != 0, "Map error because in line feed");
+				ft_assert(char_count != 0, "Map error");
 			char_count = 0;
 		}
 		else
 			char_count++;
 	}
-	ft_assert(map_data[--i] == '\n', "Map error because in line feed");
+	ft_assert(map_data[--i] == '\n', "Map error");
 }
 
 void	ft_parsing(t_mlx *mlx, char *file)

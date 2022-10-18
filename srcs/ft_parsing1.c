@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chulee <chulee@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:37:16 by chulee            #+#    #+#             */
-/*   Updated: 2022/10/18 15:41:08 by chulee           ###   ########.fr       */
+/*   Updated: 2022/10/18 19:43:11 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,13 @@ static int	ft_parse_rgb(char *rgb_fc)
 void	ft_check_type(t_mlx *mlx, char *line)
 {
 	static const char	*type[TYPE_LENGTH] = {"NO", "EA", "WE", "SO", "F", "C"};
-	static const char	*err_msg = "Duplicate Metadata Error!";
+	static const char	*err_msg = "Map Error!";
 	char				**split;
 	int					i;
 
 	split = ft_split(line, ' ');
 	ft_assert(split[0] != NULL && split[1] != NULL && \
-		(split[2] == NULL || split[2][0] == '\n'), "Map Type Error!");
+		(split[2] == NULL || split[2][0] == '\n'), err_msg);
 	i = -1;
 	while (++i < TYPE_LENGTH)
 	{
@@ -85,7 +85,7 @@ void	ft_check_type(t_mlx *mlx, char *line)
 				mlx->info.ceilling_color = ft_parse_rgb(split[1]);
 			break ;
 		}
-		ft_assert(i != TYPE_LENGTH - 1, "Metadata Error!");
+		ft_assert(i != TYPE_LENGTH - 1, err_msg);
 	}
 	ft_split_clear(split);
 }
