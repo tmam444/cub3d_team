@@ -1,12 +1,10 @@
+F 255,255,25
+C 0,200,0
+
 NO ./texture/wall_n.xpm
 SO ./texture/wall_s.xpm
 WE ./texture/wall_w.xpm
 EA ./texture/wall_e.xpm
-
-F 255,255,25
-C 0,200,0
-
-
 
 
         1111111111111111111111111

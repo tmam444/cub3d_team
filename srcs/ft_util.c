@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 14:45:59 by youskim           #+#    #+#             */
-/*   Updated: 2022/10/18 20:12:52 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/19 14:51:07 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_assert(int check, const char *err_msg)
 	if (!check)
 	{
 		write(2, "Error\n", 6);
-		write(2, err_msg, strlen(err_msg));
+		write(2, err_msg, ft_strlen(err_msg));
 		write(2, "\n", 1);
 		exit(1);
 	}

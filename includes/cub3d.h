@@ -6,19 +6,16 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 17:44:58 by chulee            #+#    #+#             */
-/*   Updated: 2022/10/19 14:35:51 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/19 14:51:45 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <float.h>
 # include <math.h>
-# include <string.h>
 # include <fcntl.h>
 # include "get_next_line.h"
 # include "../minilibx_opengl_20191021/mlx.h"
