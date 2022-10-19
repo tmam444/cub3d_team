@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 17:44:58 by chulee            #+#    #+#             */
-/*   Updated: 2022/10/18 20:08:47 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/19 14:35:51 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,6 @@
 # define SX					1280
 # define SY					960
 # define FOV				60
-# define FOV_H				1.0472
-# define FOV_V				0.83776
-# define WALL_H				1.0
 # define ROT_UNIT			0.1
 # define MOVE_UNIT			0.2
 

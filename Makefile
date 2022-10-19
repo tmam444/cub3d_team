@@ -6,7 +6,7 @@
 #    By: youskim <youskim@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/26 19:41:21 by chulee            #+#    #+#              #
-#    Updated: 2022/10/18 20:31:03 by youskim          ###   ########.fr        #
+#    Updated: 2022/10/19 14:35:27 by youskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,6 +64,8 @@ SRCS_B=bonus/main_bonus.c \
 	 bonus/ft_parsing_util_bonus.c \
 	 bonus/ft_minimap_bonus.c
 OBJS_B = $(addprefix objs/, $(notdir $(SRCS_B:.c=.o)))
+HEADERS = includes/cub3d.h
+HEADERS_B = includes/cub3d_bonus.h
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 MLX_LIB = ./minilibx_opengl_20191021
@@ -71,8 +73,10 @@ MLX_FLAGS = -lm -L$(MLX_LIB) -lmlx -framework OpenGL -framework AppKit
 
 ifdef WITH_BONUS
 	OBJ_FILES = $(OBJS_B)
+	HEADERS_FILES = $(HEADERS_B)
 else
 	OBJ_FILES = $(OBJS)
+	HEADERS_FILES = $(HEADERS)
 endif
 
 $(NAME) : $(OBJ_FILES)
@@ -83,7 +87,7 @@ $(B_NAME) : $(OBJ_FILES)
 		$(MAKE) -C $(MLX_LIB)
 		$(CC) $(CFLAGS) $(MLX_FLAGS) -o $(B_NAME) $(OBJ_FILES)
 
-objs/%.o : srcs/%.c
+objs/%.o : srcs/%.c $(HEADERS_FILES)
 		$(CC) $(CFLAGS) -c $< -o $@
 
 objs/%.o : bonus/%.c

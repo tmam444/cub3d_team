@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:01:02 by youskim           #+#    #+#             */
-/*   Updated: 2022/10/18 19:32:17 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/19 14:40:06 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 static int	get_wall_height(double wdist)
 {
-	const double	fov_h = 2.0 * wdist * tan(FOV_V / 2.0);
+	const double	fov_v = ft_deg_to_rad(FOV) * (double)SY / (double)SX;
+	const double	total_height = 2.0 * wdist * tan(fov_v / 2.0);
 
-	return ((int)(SY * (WALL_H / fov_h)));
+	return ((int)(SY / total_height));
 }
 
 static double	calc_txratio(t_mlx *mlx, t_dir wdir)
@@ -48,7 +49,7 @@ static void	draw_wall(t_mlx *mlx, double wdist, int x, t_dir wdir)
 					mlx->imgs[wdir].data[tx_ty[1] * 64 + tx_ty[0]]);
 		else
 			pixel_put(mlx, x, y_start_end[0], \
-					mlx->imgs[wdir].data[tx_ty[1] * 64 - tx_ty[0]]);
+					mlx->imgs[wdir].data[(tx_ty[1]) * 64 - tx_ty[0] + 63]);
 		y_start_end[0] += 1;
 	}
 }

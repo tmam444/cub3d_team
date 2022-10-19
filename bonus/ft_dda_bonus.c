@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:01:01 by youskim           #+#    #+#             */
-/*   Updated: 2022/10/18 20:25:07 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/19 14:39:12 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,9 @@ void	calc_bump_wall(double ray, t_dir *wdir, t_mlx *mlx)
 
 double	cast_single_ray(int x, t_dir *wdir, t_mlx *mlx)
 {
-	const double	fovh_2 = FOV_H / 2.0;
-	const double	ray = (mlx->player.th + fovh_2) - (x * FOV_H / (SX - 1.));
+	const double	fov_h = ft_deg_to_rad(FOV);
+	const double	fovh_2 = fov_h / 2.0;
+	const double	ray = (mlx->player.th + fovh_2) - (x * fov_h / (SX - 1.));
 	double			wdist;
 
 	calc_bump_wall(ray, wdir, mlx);

@@ -6,7 +6,7 @@
 /*   By: youskim <youskim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 19:31:48 by youskim           #+#    #+#             */
-/*   Updated: 2022/10/18 20:25:25 by youskim          ###   ########.fr       */
+/*   Updated: 2022/10/19 14:41:20 by youskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,21 @@ static void	ft_set_color(t_mlx *mlx, int *color, int i, int j)
 
 static void	ft_put_minimap(t_mlx *mlx, int start_x, int start_y, int color)
 {
-	int	i;
-	int	j;
+	const int	margin = SX / 55;
+	const int	size = SX / 50;
+	int			i;
+	int			j;
 
 	i = 0;
-	while (i < 20)
+	while (i < size)
 	{
 		j = 0;
-		while (j < 20)
+		while (j < size)
 		{
 			mlx_pixel_put(mlx->mlx_ptr, mlx->win, \
-			(10 + (start_x - ((int)mlx->player.x - 2)) * 20) + i, \
-			(int)fabs(((double)((start_y - ((int)mlx->player.y - 2)) * 20) + \
-			j - 127)), color);
+			(margin + (start_x - ((int)mlx->player.x - 2)) * size) + i, \
+			(int)fabs(((double)((start_y - ((int)mlx->player.y - 2)) * size) + \
+			j - size * 5)) + margin, color);
 			j++;
 		}
 		i++;
@@ -54,11 +56,11 @@ void	ft_render_minimap(t_mlx *mlx)
 	int	start_y;
 
 	color = 0x000000;
-	start_x = mlx->player.x - 2;
-	while (start_x < mlx->player.x + 3)
+	start_x = (int)mlx->player.x - 2;
+	while (start_x < (int)mlx->player.x + 3)
 	{
-		start_y = mlx->player.y - 2;
-		while (start_y < mlx->player.y + 3)
+		start_y = (int)mlx->player.y - 2;
+		while (start_y < (int)mlx->player.y + 3)
 		{
 			ft_set_color(mlx, &color, start_x, start_y);
 			ft_put_minimap(mlx, start_x, start_y, color);
